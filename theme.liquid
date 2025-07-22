@@ -11,6 +11,46 @@
   </script>
 
 
-<!-- // if we don't have smooth scroll in popup than add below attribute in popup modal main div -->
+<!-- // if we don't have smooth scroll in popup then add below attribute in popup modal main div -->
 
 data-lenis-prevent
+
+
+<!-- if don't want to add jquery than use the below code -->
+
+<!-- Load Lenis first -->
+<script id="lenis-lib" src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+
+<!-- Then init it safely -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function initLenis() {
+      if (typeof Lenis === 'undefined') {
+        // Try again after delay
+        return setTimeout(initLenis, 100);
+      }
+
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: true
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    initLenis();
+  });
+</script>
+
+<!-- Add below div into body tag -->
+
+<div id="lenis-root">
+
+</div>
